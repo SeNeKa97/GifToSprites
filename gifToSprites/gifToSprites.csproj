@@ -80,6 +80,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GifToSpritesClasses\GifToSpritesClasses.csproj">
+      <Project>{d3ff6890-3940-467f-8326-d09f285de4cf}</Project>
+      <Name>GifToSpritesClasses</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
