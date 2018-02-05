@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using GifToSpritesClasses;
 
 namespace gifToSprites
 {
@@ -25,7 +26,8 @@ namespace gifToSprites
             openFileDialog1.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             openFileDialog1.FileName = null;
             openFileDialog1.DefaultExt = ".gif";
-            openFileDialog1.Filter = "Файл анимации |*.gif";
+            openFileDialog1.Filter = "Animation files |*.gif";
+            openFileDialog1.Multiselect = false;
         }
 
         private void openFileButton_Click(object sender, EventArgs e)
@@ -54,7 +56,7 @@ namespace gifToSprites
             int frameCount = gif.GetFrameCount(dimension);
 
             string directoryPath = cropExtension(openFileDialog1.FileName, ".gif"); //получаем путь к создаваемой папке путем вырезания расширения из имени .gif-файла 
-
+            MessageBox.Show(PathHelper.GetFullPathWithoutExtension(openFileDialog1.FileName));
             Image[] frames = new Image[frameCount];         //Создаем массив кадров с длинной, равной количеству кадров анимации
             Graphics g;
 
