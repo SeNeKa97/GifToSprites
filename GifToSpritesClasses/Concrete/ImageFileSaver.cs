@@ -39,7 +39,7 @@ namespace GifToSpritesClasses
 
                     string name = CheckName(fileName, ext);
 
-                    images[0].Save(name, ImageFormat.Png);
+                    images[i].Save(name, ImageFormat.Png);
                 }
             } catch(Exception ex) {
                 return false;
