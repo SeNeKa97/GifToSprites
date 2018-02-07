@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace GifToSpritesClasses
 {
-    interface IConverter
+    public interface IGifConverter
     {
         Image[] Convert();
     }

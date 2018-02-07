@@ -16,8 +16,8 @@ namespace gifToSprites
 {
     public partial class Form1 : Form
     {
-        Image gifImg;
-
+        private Image gifImg;
+        private IGifConverter converter;
 
         public Form1()
         {
