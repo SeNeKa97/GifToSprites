@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GifToSpritesClasses
 {
-    class InvalidImageFormatException:Exception
+    public class InvalidImageFormatException:Exception
     {
         public InvalidImageFormatException(){}
 

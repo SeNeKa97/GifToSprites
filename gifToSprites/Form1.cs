@@ -47,97 +47,21 @@ namespace gifToSprites
         private void sliceButton_Click(object sender, EventArgs e)
         {
             string nameWithoutExtension = PathHelper.GetFullPathWithoutExtension(fileName);
-            if (radioButton1.Checked) {
-                converter = new GifToSpritesheet(gifImg);
-                ImageFileSaver.Save(converter.Convert()[0], nameWithoutExtension);
-                //gifToSpriteSheet(gifImg);
-            }  else {
-                converter = new GifToSprites(gifImg);
-                ImageFileSaver.SaveMultiple(converter.Convert(), nameWithoutExtension);
-                //gifToDifferentFrames(gifImg);
-            }
 
-        }
+            try {
+                if (radioButton1.Checked) {
 
+                    converter = new GifToSpritesheet(gifImg);
+                    ImageFileSaver.Save(converter.Convert()[0], nameWithoutExtension);
+                } else {
 
-        //Метод используется для нарезания анимации на отдельные файлы изображений, каждый 
-        //из которых содержит в себе отдельный кадр анимации
-        //все полученные изображения помещаются в новую папку, имеющую имя, идентичное имени .gif-файла, 
-        //для чего вырезается расширение из имени файла
-        private void gifToDifferentFrames(Image gif) {
-            
-            FrameDimension dimension = new FrameDimension(gif.FrameDimensionsList[0]);
-            int frameCount = gif.GetFrameCount(dimension);
-
-            string directoryPath = cropExtension(openFileDialog1.FileName, ".gif"); //получаем путь к создаваемой папке путем вырезания расширения из имени .gif-файла 
-            MessageBox.Show(PathHelper.GetFullPathWithoutExtension(openFileDialog1.FileName));
-            Image[] frames = new Image[frameCount];         //Создаем массив кадров с длинной, равной количеству кадров анимации
-            Graphics g;
-
-            if (!Directory.Exists(directoryPath))           //проверяем, существует ли уже папка с таким названием
-                Directory.CreateDirectory(directoryPath);   //если нет, создаем её
-
-
-            for (int i = 0; i < frameCount; i++) {
-
-                frames[i] = new Bitmap(gif.Width, gif.Height, gif.PixelFormat); //Каждый элемент массива кадров инициализируем отдельным bitmap'ом,
-                                                                                //имеющий ширину, высоту и кол-во битов на пиксель как у оригинального .gif
-
-                gif.SelectActiveFrame(dimension, i);                            //извлекаем из .gif текущий кадр
-                g = Graphics.FromImage(frames[i]);                              //создаем новый холст из текущего элемента массива кадров
-                g.DrawImage(gif,0,0);                                           //и переносим кадр анимации на холст
-
-                frames[i].Save(directoryPath + "\\" + "frame_" + (i + 1) + ".png");//сохраняем измененный элемент массива кадров
-            }
-            
-            foreach (var item in frames) 
-                if(item!=null)
-                    item.Dispose();      //освобождаем ресурсы, занимаемые элементами массива кадров
-        }
-
-
-
-
-        //Метод позволяет сохранить кадры анимации в виде её последовательной раскадровки на одном изображении (спрайтлисте)
-        private void gifToSpriteSheet(Image gif) {
-
-            FrameDimension dimension = new FrameDimension(gif.FrameDimensionsList[0]);
-            int frameCount = gif.GetFrameCount(dimension);
-
-            //обрезаем расширение, чтобы иметь возможность назвать результирующий файл так же, как и .gif-файл,
-            string directoryPath = cropExtension(openFileDialog1.FileName, ".gif");
-
-            //создаем новый спрайтлист - bitmap, с высотой .gif-файла и шириной, полученной путем умножения кол-ва кадров анимации
-            //на ширину изображения .gif-файла
-            using (Bitmap spriteSheet = new Bitmap(gif.Width * frameCount, gif.Height, gif.PixelFormat)) {
-
-                //Создаем обьект графики из спрайтлиста для обеспечения возможности рисования на нем
-                using (Graphics g = Graphics.FromImage(spriteSheet)) {
-                    
-                    for (int frames = 0; frames < frameCount; frames++) {
-
-                        gif.SelectActiveFrame(dimension, frames); //выбираем текущий кадр анимации
-                        g.DrawImage(gif, gif.Width * frames, 0);  //и переносим его на указанную позицию на спрайтлисте
-                    }
-                
-                    spriteSheet.Save(directoryPath + "_spritesheet" + ".png"); //сохраняем спрайтлист с названием файла анимации, но с приставкой "_spritesheet"
+                    converter = new GifToSprites(gifImg);
+                    ImageFileSaver.SaveMultiple(converter.Convert(), nameWithoutExtension);
                 }
+            } catch(InvalidImageFormatException ex) {
+                MessageBox.Show("Selected image either corrupt or is not of .gif format");
             }
+
         }
-
-
-
-        private string cropExtension(string path, string extension) {
-            StringBuilder sb = new StringBuilder(path);
-            for (int i = 0; i < sb.Length; i++) 
-                if (sb[i] == extension[0]) 
-                    sb.Remove(i, extension.Length);
-
-            return sb.ToString();
-        }
-
-
-
-        
     }
 }
