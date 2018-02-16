@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GifToSpritesClasses
 {
-    class GifToSpritesheet : IConverter
+    public class GifToSpritesheet : IGifConverter
     {
         private Image _gif;
         private int dimX, dimY;
@@ -18,7 +18,7 @@ namespace GifToSpritesClasses
 
         public GifToSpritesheet(Image gif)
         {
-            if (!ImageFormat.Gif.Equals(gif))
+            if (!ImageFormat.Gif.Equals(gif.RawFormat))
                 throw new InvalidImageFormatException("Selected image is not of .gif format");
 
             this._gif = gif;

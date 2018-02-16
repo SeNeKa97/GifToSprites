@@ -43,7 +43,7 @@
   <ItemGroup>
     <Compile Include="Concrete\GifToSprites.cs" />
     <Compile Include="Concrete\GifToSpritesheet.cs" />
-    <Compile Include="Abstract\IConverter.cs" />
+    <Compile Include="Abstract\IGifConverter.cs" />
     <Compile Include="Concrete\ImageFileSaver.cs" />
     <Compile Include="Exceptions\InvalidImageFormatException.cs" />
     <Compile Include="Helpers\PathHelper.cs" />

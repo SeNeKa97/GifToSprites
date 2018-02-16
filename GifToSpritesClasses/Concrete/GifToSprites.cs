@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GifToSpritesClasses
 {
-    public class GifToSprites : IConverter
+    public class GifToSprites : IGifConverter
     {
         private Image _gif;
         private FrameDimension dimension;
